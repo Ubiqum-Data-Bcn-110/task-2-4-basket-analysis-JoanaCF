@@ -94,7 +94,6 @@ itemFrequencyPlot(ElectronidexTransactions, topN =5)
 ??itemFrequencyPlot
 ### C: the products with the highest frequency are: iMac, HP Laptop, CYBERPOWER Gamer Desktop, Apple Earpods, Apple MacBook Air. 
 
-image(ElectronidexTransactions)
 ??image
 
 image(sample(ElectronidexTransactions, 50))
@@ -108,6 +107,25 @@ image(sample(ElectronidexTransactions, 150))
 image(sample(ElectronidexTransactions, 200))
 ### C: high frequency around items nr 20, 30,40, 60,80, 100 and 120/5
 
+itemFrequency(ElectronidexTransactions[, 118:125] )
+itemFrequency(ElectronidexTransactions[, 122] )
+### C: iMac is item 122
+
+itemFrequency(ElectronidexTransactions[, 18:25] )
+### C: item 18 and 19 are also from Apple and have high relative frequencies - Apple MacBook Air and Apple MacBook Pro, 0.16 and 0.11, respectively
+
+itemFrequency(ElectronidexTransactions[, 55:65] )
+### C: item 61 - HP Laptop also has a high relative frequencies - HP Laptop, 0.19
+
+itemFrequencyPlot(ElectronidexTransactions, support = 0.2)
+### C: Only iMac
+
+itemFrequencyPlot(ElectronidexTransactions, support = 0.19)
+### C: Only iMac and Hp Laptop
+
+itemFrequencyPlot(ElectronidexTransactions, support = 0.18)
+### C: Only iMac, Hp Laptop and CYBERPOWER Gamer Desktop
+
 
 
 ## to be run:
@@ -118,6 +136,8 @@ plotCumfreq(ElectronidexTransactions)
 ## to do : 
 # itemfrequencyplot - a way to plot using certain metrics? Which plots might provide the most insight?
 # sacar un grafico de frecuencias por item set
+
+# image - After plotting your visualizations, do you notice any patterns? Or have any observations? Take notes on your insights and observations, which might be useful to include in your formal report.
 
 
 
