@@ -54,6 +54,8 @@ ElectronidexTransactions <- read.transactions("Desktop/UBIQUM/2. Tasks/Course 2/
 ### WM: In asMethod(object) : removing duplicated items in transactions - What is it?
 ??read.transactions
 
+#### 2. Exploring dataset ####
+
 View(ElectronidexTransactions)
 str(ElectronidexTransactions)
 LIST(ElectronidexTransactions)
@@ -67,35 +69,48 @@ size(ElectronidexTransactions)
 itemInfo(ElectronidexTransactions)
 ### P - list of items
 
+sum(size(ElectronidexTransactions))
+### C/D: It seems that in a month, the company has sold 43104 items
+max(size(ElectronidexTransactions))
+### C/D: It seems that the maximum number of items bought per transaction is 30
+
 itemFrequency(ElectronidexTransactions, type = "relative")
+### P - the relative frequency of each item
 itemFrequency(ElectronidexTransactions, type = "absolute")
-sum(itemFrequency(ElectronidexTransactions))
+### P - the absolute frequency of each item
+#### C: in that month, 2519 iMacs have been boight
+#### C: in that month, 1909 HP Laptops have been bought
+#### C: in that month, 1809 CYBER Gamer Desktop have been bought
+
+
+sum(itemFrequency(ElectronidexTransactions, type = "relative"))
+### D/C: why isn't this 1?
 sum(itemFrequency(ElectronidexTransactions, type = "absolute"))
-### D/C: the total number of items bought is 43103
+### D/C: the total number of items bought is 43104
 
 max(itemFrequency(ElectronidexTransactions))
 ### D/C: the most frequent item has a relative frequency/support of 0.25  (- its the imac)
 max(itemFrequency(ElectronidexTransactions, type = "absolute"))
-### D/C: the most frequent item has been bought 2519 times (not the same as the number of transactions)
-### Q: How can I know what is it? 
+### D/C: the most frequent item has been bought 2519 times // this is not the same as the number of transactions
+
+### Q: How can I know what product is it? 
 ### Q: how do I know in know many transactions it has been purchased?
 
 min(itemFrequency(ElectronidexTransactions))
-### D/C: the least frequent item has a relative frequency of 0.0022 - Logitech MK270 Wireless Keyboard and Mouse Combo 
+### D/C: the least frequent item bougtht has a relative frequency of 0.0022 and is Logitech MK270 Wireless Keyboard and Mouse Combo 
 min(itemFrequency(ElectronidexTransactions, type = "absolute"))
-### D/C: the least frequent item has been bought 22  times 
+### D/C: the least frequent item bought has been purchased 22  times 
 mean(itemFrequency(ElectronidexTransactions, type = "absolute"))
 ### D/C: the average number of purchases of products is 344.832 / 345
-### Q: How can I reffer to a given basket?
-??itemFrequency
 
+### Q: How can I reffer to a given basket?
+
+??itemFrequencyPlot
 itemFrequencyPlot(ElectronidexTransactions, topN =10)
 itemFrequencyPlot(ElectronidexTransactions, topN =5)
-??itemFrequencyPlot
 ### C: the products with the highest frequency are: iMac, HP Laptop, CYBERPOWER Gamer Desktop, Apple Earpods, Apple MacBook Air. 
 
 ??image
-
 image(sample(ElectronidexTransactions, 50))
 ### C: There seems to be a gap around items nr 50 and 100;
 ### C: there seems to ve a concentration around items 20 and 120. 
@@ -106,11 +121,28 @@ image(sample(ElectronidexTransactions, 150))
 
 image(sample(ElectronidexTransactions, 200))
 ### C: high frequency around items nr 20, 30,40, 60,80, 100 and 120/5
+dev.off()
+### E: faced an error when tried to rerun this. To fix it, I have run: dev.off() 
 
 itemFrequency(ElectronidexTransactions[, 118:125] )
 itemFrequency(ElectronidexTransactions[, 122] )
 ### C: iMac is item 122
 
+### C: A transaction near transaction 150 seems to have a lot of items
+sum(itemFrequency(ElectronidexTransactions[150,], type="absolute" ))
+### C: item 153 hasonly been bought twice
+sum(itemFrequency(ElectronidexTransactions[149,], type="absolute" ))
+### C: item 153 hasonly been bought 6 times
+sum(itemFrequency(ElectronidexTransactions[148,],type="absolute" ))
+### C: item 153 hasonly been bought 4 times
+sum(itemFrequency(ElectronidexTransactions[151,], type="absolute" ))
+### C: item 153 hasonly been bought 6 times
+sum(itemFrequency(ElectronidexTransactions[152,], type="absolute" ))
+### C: item 153 hasonly been bought 7 times
+sum(itemFrequency(ElectronidexTransactions[153,], type="absolute" ))
+### C: item 153 hasonly been bought once
+
+### C: there seems to be an item around 20 that have been bought several times 
 itemFrequency(ElectronidexTransactions[, 18:25] )
 ### C: item 18 and 19 are also from Apple and have high relative frequencies - Apple MacBook Air and Apple MacBook Pro, 0.16 and 0.11, respectively
 
@@ -118,15 +150,15 @@ itemFrequency(ElectronidexTransactions[, 55:65] )
 ### C: item 61 - HP Laptop also has a high relative frequencies - HP Laptop, 0.19
 
 itemFrequencyPlot(ElectronidexTransactions, support = 0.2)
-### C: Only iMac
+### C: Only iMac = > relative frequency 0.2 
 
 itemFrequencyPlot(ElectronidexTransactions, support = 0.19)
-### C: Only iMac and Hp Laptop
+### C: Only iMac and Hp Laptop = > relative frequency 0.19
 
 itemFrequencyPlot(ElectronidexTransactions, support = 0.18)
-### C: Only iMac, Hp Laptop and CYBERPOWER Gamer Desktop
+### C: Only iMac, Hp Laptop and CYBERPOWER Gamer Desktop = > relative frequency 0.18
 
-
+image(sample(ElectronidexTransactions,100))
 
 ## to be run:
 install.packages("moosaic")
@@ -136,7 +168,6 @@ plotCumfreq(ElectronidexTransactions)
 ## to do : 
 # itemfrequencyplot - a way to plot using certain metrics? Which plots might provide the most insight?
 # sacar un grafico de frecuencias por item set
-
 # image - After plotting your visualizations, do you notice any patterns? Or have any observations? Take notes on your insights and observations, which might be useful to include in your formal report.
 
 
