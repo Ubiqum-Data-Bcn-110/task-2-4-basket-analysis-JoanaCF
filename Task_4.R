@@ -404,6 +404,193 @@ Product_type[grep("Sonos", Product_type)] <- "Speakers"
 sum(Product_type == "Speakers")
 Product_type
 
+## 5.1.7 Laptops
+grep("Laptop", Product_type)
+Product_type[grep("Laptop", Product_type)] <- "Laptops"
+Product_type
+sum(Product_type == "Laptops")
+
+grep("Acer Aspire", Product_type)
+Product_type[grep("Acer Aspire", Product_type)] <- "Laptops"
+
+grep("ASUS Chromebook", Product_type)
+Product_type[grep("ASUS Chromebook", Product_type)] <- "Laptops"
+
+grep("Apple MacBook Pro", Product_type)
+Product_type[grep("Apple MacBook Pro", Product_type)] <- "Laptops"
+
+grep("Apple MacBook Air", Product_type)
+Product_type[grep("Apple MacBook Air", Product_type)] <- "Laptops"
+
+## 5.1.7 Mouse and Keyboard Combo
+grep("Combo", Product_type)
+Product_type[grep("Combo", Product_type)] <- "Mouse and Keyboard Combo"
+sum(Product_type == "Mouse and Keyboard Combo")
+
+grep("Keyboard & Mouse", Product_type)
+Product_type[grep("Keyboard & Mouse", Product_type)] <- "Mouse and Keyboard Combo"
+sum(Product_type == "Mouse and Keyboard Combo")
+
+grep("Keyboard and Mouse", Product_type)
+Product_type[grep("Keyboard and Mouse", Product_type)] <- "Mouse and Keyboard Combo"
+sum(Product_type == "Mouse and Keyboard Combo")
+
+## 5.1.8 Desktops
+grep("Desktops", Product_type)
+Product_type[grep("Desktop", Product_type)] <- "Desktops"
+sum(Product_type == "Desktops")
+
+grep("iMac", Product_type)
+Product_type[grep("iMac", Product_type)] <- "Desktops"
+sum(Product_type == "Desktops")
+
+## 5.1.9 Computer Cords
+grep("Cable", Product_type)
+Product_type[grep("Cable", Product_type)] <- "Computer Cords"
+sum(Product_type == "Computer Cords")
+
+grep("HDMI Adapter", Product_type)
+Product_type[grep("HDMI Adapter", Product_type)] <- "Computer Cords"
+sum(Product_type == "Computer Cords")
+
+## 5.1.10 Monitors
+grep("Monitor", Product_type)
+Product_type[grep("Monitor", Product_type)] <- "Monitors"
+sum(Product_type == "Monitors")
+
+## 5.1.11 Accessories
+grep("Microsoft Office Home and Student 2016", Product_type)
+Product_type[grep("Microsoft Office Home and Student 2016", Product_type)] <- "Accessories"
+sum(Product_type == "Accessories")
+
+grep("Computer Game", Product_type)
+Product_type[grep("Computer Game", Product_type)] <- "Accessories"
+
+grep("Mouse Pad", Product_type)
+Product_type[grep("Mouse Pad", Product_type)] <- "Accessories"
+
+## 5.1.12 Active Headphones
+grep("Apple Earpods", Product_type)
+Product_type[grep("Apple Earpods", Product_type)] <- "Active Headphones"
+sum(Product_type == "Active Headphones")
+
+grep("Monster Beats By Dr Dre", Product_type)
+Product_type[grep("Monster Beats By Dr Dre", Product_type)] <- "Active Headphones"
+sum(Product_type == "Active Headphones")
+
+grep("Panasonic In-Ear Headphone", Product_type)
+Product_type[grep("Panasonic In-Ear Headphone", Product_type)] <- "Active Headphones"
+sum(Product_type == "Active Headphones")
+
+grep("Otium", Product_type)
+Product_type[grep("Otium", Product_type)] <- "Active Headphones"
+sum(Product_type == "Active Headphones")
+
+grep("APIE", Product_type)
+Product_type[grep("APIE", Product_type)] <- "Active Headphones"
+sum(Product_type == "Active Headphones")
+
+grep("Philips", Product_type)
+Product_type[grep("Philips", Product_type)] <- "Active Headphones"
+sum(Product_type == "Active Headphones")
+
+## 5.1.12 Computer Headphones
+grep("Headset", Product_type)
+Product_type[grep("Headset", Product_type)] <- "Computer Headphones"
+sum(Product_type == "Computer Headphones")
+
+grep("Panasonic", Product_type)
+Product_type[grep("Panasonic", Product_type)] <- "Computer Headphones"
+sum(Product_type == "Computer Headphones")
+
+grep("Kensington Headphones", Product_type)
+Product_type[grep("Kensington Headphones", Product_type)] <- "Computer Headphones"
+sum(Product_type == "Computer Headphones")
+
+grep("Koss Home Headphones", Product_type)
+Product_type[grep("Koss Home Headphones", Product_type)] <- "Computer Headphones"
+sum(Product_type == "Computer Headphones")
+
+grep("Ailihen Stereo Headphones", Product_type)
+Product_type[grep("Ailihen Stereo Headphones", Product_type)] <- "Computer Headphones"
+sum(Product_type == "Computer Headphones")
+
+Product_type
+
+## 5.1.13 Computer Mice
+grep("3-Button Mouse", Product_type)
+Product_type[grep("3-Button Mouse", Product_type)] <- "Computer Mice"
+sum(Product_type == "Computer Mice")
+
+grep("Logitech Wireless Mouse", Product_type)
+Product_type[grep("Logitech Wireless Mouse", Product_type)] <- "Computer Mice"
+sum(Product_type == "Computer Mice")
+
+grep("Microsoft Basic Optical Mouse", Product_type)
+Product_type[grep("Microsoft Basic Optical Mouse", Product_type)] <- "Computer Mice"
+sum(Product_type == "Computer Mice")
+
+grep("Logitech 3-button Mouse", Product_type)
+Product_type[grep("Logitech 3-button Mouse", Product_type)] <- "Computer Mice"
+sum(Product_type == "Computer Mice")
+
+grep("Redragon Gaming Mouse", Product_type)
+Product_type[grep("Redragon Gaming Mouse", Product_type)] <- "Computer Mice"
+sum(Product_type == "Computer Mice")
+
+grep("HP Wireless Mouse", Product_type)
+Product_type[grep("HP Wireless Mouse", Product_type)] <- "Computer Mice"
+sum(Product_type == "Computer Mice")
+
+grep("Generic Black 3-Button", Product_type)
+Product_type[grep("Generic Black 3-Button", Product_type)] <- "Computer Mice"
+sum(Product_type == "Computer Mice")
+
+grep("Wireless Portable Mouse", Product_type)
+Product_type[grep("Wireless Portable Mouse", Product_type)] <- "Computer Mice"
+sum(Product_type == "Computer Mice")
+
+grep("Gaming Mouse Professional", Product_type)
+Product_type[grep("Gaming Mouse Professional", Product_type)] <- "Computer Mice"
+sum(Product_type == "Computer Mice")
+
+grep("Slim Wireless Mouse", Product_type)
+Product_type[grep("Slim Wireless Mouse", Product_type)] <- "Computer Mice"
+sum(Product_type == "Computer Mice")
+
+Product_type
+
+
+## 5.1.14 Keyboards
+
+grep("LED", Product_type)
+Product_type[grep("LED", Product_type)] <- "Keyboards"
+sum(Product_type == "Keyboards")
+
+grep("Wireless", Product_type)
+Product_type[grep("Wireless", Product_type)] <- "Keyboards"
+sum(Product_type == "Keyboards")
+
+grep("Magic", Product_type)
+Product_type[grep("Magic", Product_type)] <- "Keyboards"
+sum(Product_type == "Keyboards")
+
+grep("Wired", Product_type)
+Product_type[grep("Wired", Product_type)] <- "Keyboards"
+sum(Product_type == "Keyboards")
+
+grep("Logitech Keyboard", Product_type)
+Product_type[grep("Logitech Keyboard", Product_type)] <- "Keyboards"
+sum(Product_type == "Keyboards")
+
+grep("HP USB Keyboard", Product_type)
+Product_type[grep("HP USB Keyboard", Product_type)] <- "Keyboards"
+sum(Product_type == "Keyboards")
+
+Product_type
+
+str(ElectronidexTransactions_clean)
+str(ElectronidexTransactions)
 
 
 
