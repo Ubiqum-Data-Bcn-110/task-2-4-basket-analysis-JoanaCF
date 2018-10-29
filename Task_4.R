@@ -51,7 +51,8 @@ library(arulesViz)
 ElectronidexTransactions <- read.transactions("Desktop/UBIQUM/2. Tasks/Course 2/Task 4/Data/ElectronidexTransactions2017.csv", 
                                               format = "basket", sep=",", rm.duplicates=FALSE)
 ### WM: incomplete final line found on ... - OK!
-### WM: In asMethod(object) : removing duplicated items in transactions - What is it?
+### WM: In asMethod(object) : removing duplicated items in transactions - 
+
 ??read.transactions
 
 #### 2. Exploring dataset ####
@@ -66,6 +67,7 @@ itemLabels(ElectronidexTransactions)
 ### P - confirm the name of colums
 size(ElectronidexTransactions)
 ### P - size of each basket
+sizetransactions <- size(ElectronidexTransactions)
 itemInfo(ElectronidexTransactions)
 ### P - list of items
 
@@ -73,6 +75,7 @@ sum(size(ElectronidexTransactions))
 ### C/D: It seems that in a month, the company has sold 43104 items
 max(size(ElectronidexTransactions))
 ### C/D: It seems that the maximum number of items bought per transaction is 30
+
 
 itemFrequency(ElectronidexTransactions, type = "relative")
 ### P - the relative frequency of each item
@@ -165,10 +168,251 @@ install.packages("moosaic")
 library(mosaic)
 plotCumfreq(ElectronidexTransactions)
 
-## to do : 
-# itemfrequencyplot - a way to plot using certain metrics? Which plots might provide the most insight?
-# sacar un grafico de frecuencias por item set
-# image - After plotting your visualizations, do you notice any patterns? Or have any observations? Take notes on your insights and observations, which might be useful to include in your formal report.
+#### 3. Applying the algorithm // unclean dataset ####
+
+apriorirules_1 <- apriori(ElectronidexTransactions, parameter = list(supp=0.1, conf=0.8))
+inspect(apriorirules_1)
+### C: Nothing
+
+apriorirules_2 <- apriori(ElectronidexTransactions, parameter = list(supp=0.1, conf=0.2))
+inspect(apriorirules_2)
+### C: iMac -   lhs    rhs    support   confidence lift count
+### [1] {}  => {iMac} 0.2561261 0.2561261  1    2519 
+
+apriorirules_3 <- apriori(ElectronidexTransactions, parameter = list(supp=0.05, conf=0.2))
+inspect(apriorirules_3)
+### C: 9 rules: dell desktop -> iMac; iMac -> Dell desktop; CYBERPOWER Gamer Desktop -> iMac; Lenovo Desktop Computer -> iMac; iMac -> Lenovo Desktop Computer; HP Laptop -> iMac; iMac -> HP Laptop
+### D: que significa tener las mismas regras pero al reves?
+
+apriorirules_4 <- apriori(ElectronidexTransactions, parameter = list(conf=0.1))
+inspect(apriorirules_4)
+### D: que significa ser () => algo
+
+apriorirules_5 <- apriori(ElectronidexTransactions, parameter = list(supp=0.05))
+inspect(apriorirules_5)
+### D: porque no sale nada?
+
+apriorirules_6 <- apriori(ElectronidexTransactions, parameter = list(supp=0.07, conf=0.2))
+inspect(apriorirules_6)
+### C: no anade nada
+
+apriorirules_7 <- apriori(ElectronidexTransactions, parameter = list(supp=0.04, conf=0.2))
+inspect(apriorirules_7)
+### C: 19 rules
+
+apriorirules_8 <- apriori(ElectronidexTransactions, parameter = list(supp=0.02, conf=0.2))
+inspect(apriorirules_8)
+### C: 86 rules; also have count for each rule
+
+apriorirules_9 <- apriori(ElectronidexTransactions, parameter = list(supp=0.02))
+inspect(apriorirules_9)
+### D/C: Nothing
+
+apriorirules_10 <- apriori(ElectronidexTransactions, parameter = list(conf=0.02))
+inspect(apriorirules_10)
+### D/C: I don't understand this output / got it support = confidence
+
+apriorirules_11 <- apriori(ElectronidexTransactions, parameter = list(supp=0.01, conf=0.2))
+inspect(apriorirules_11)
+### D/C: 142 rules; also have count for each rule
+
+apriorirules_12 <- apriori(ElectronidexTransactions, parameter = list(supp=0.07, conf=0.15))
+inspect(apriorirules_12)
+### D/C: 7 rules / solo dos especifica entre iMAC y HP Laptop
+
+apriorirules_13 <- apriori(ElectronidexTransactions, parameter = list(supp=0.07, conf=0.1))
+inspect(apriorirules_13)
+### C: same as before - 12
+
+apriorirules_13 <- apriori(ElectronidexTransactions, parameter = list(supp=0.07, conf=0.1))
+inspect(apriorirules_13)
+### D/C: 7 rules / solo dos especifica entre iMAC y HP Laptop
+
+apriorirules_14 <- apriori(ElectronidexTransactions, parameter = list(supp=0.05, conf=0.1))
+inspect(apriorirules_14)
+### D/C: 18 rules / similar to rules 3
+
+apriorirules_15 <- apriori(ElectronidexTransactions, parameter = list(supp=0.02, conf=0.1))
+inspect(apriorirules_15)
+
+apriorirules_16 <- apriori(ElectronidexTransactions, parameter = list(supp=0.02, conf=0.5))
+inspect(apriorirules_16)
+### C: only 1 rule confidence =0.5 - hp laptop, lenovo desktop computer and imac 
+
+apriorirules_17 <- apriori(ElectronidexTransactions, parameter = list(supp=0.02, conf=0.4))
+inspect(apriorirules_17)
+### C: 4 rules with lift >2 and confidence > 0.4 
+### C: best one: Viewsonic, imac -> hp laptop
+
+apriorirules_18 <- apriori(ElectronidexTransactions, parameter = list(supp=0.02, conf=0.3))
+inspect(apriorirules_18)
+### C: 4 rules with lift >2 and confidence > 0.4 
+### C: best one: Viewsonic, imac -> hp laptop
+
+??apriori
+
+rules <- apriori(ElectronidexTransactions, 
+                 parameter = list(supp = 0.01, conf = 0.3, target = "rules"))
+summary(rules)
+### C: support max: 0.0755, confidence max: 0.6023, lift max: 3.36
+
+rules1 <- apriori(ElectronidexTransactions, 
+                 parameter = list(supp = 0.01, conf = 0.3, target = "rules"))
+summary(rules1)
+### C: Maximum amounts are the same as in rules
+
+#### 4. Cleaning dataset ####
+
+sizetransactions <- size(ElectronidexTransactions)
+sum(sizetransactions == "0")
+which(sizetransactions == "0")
+### C: transaction 8707 and 9506 tiene 0 productos
+hist(sizetransactions)
+
+
+sum(sizetransactions == "1")
+which(sizetransactions == "1")
+### C: 2163 transactions only have one product
+
+ElectronidexTransactions_0 <- ElectronidexTransactions[sizetransactions == 0]
+summary(ElectronidexTransactions_0)
+hist(ElectronidexTransactions_0)
+
+ElectronidexTransactions_1 <- ElectronidexTransactions[sizetransactions == 1]
+summary(ElectronidexTransactions_1)
+hist(ElectronidexTransactions_1)
+### C: Most ferquent products that were bought soo: Apple MacBook Air(383), Apple Earpods (156), iMac (121) and CYBERPOWER Gamer Desktop (109) 
+
+ElectronidexTransactions_new <- ElectronidexTransactions[!size(ElectronidexTransactions)== "0"]
+summary(ElectronidexTransactions_new)
+
+ElectronidexTransactions_new_2 <- ElectronidexTransactions_new[!size(ElectronidexTransactions_new)== "1"]
+summary(ElectronidexTransactions_new_2)
+### C: 7670 rows =  9835 - 2163 - 2
+
+ElectronidexTransactions_clean <- ElectronidexTransactions_new_2
+
+### P: Clean dataset is ElectronidexTransactions_clean
+
+#### 5. Create categories
+
+# 5.1 Products
+## 5.1.1 External Hardrives
+Product_type <- ElectronidexTransactions_clean@itemInfo$labels 
+
+grep("Hard Drive", Product_type)
+Product_type[grep("Hard Drive", Product_type)]
+Product_type[grep("Hard Drive", Product_type)] <- "External Hardrives" 
+Product_type
+sum(Product_type == "External Hardrives")
+
+## 5.1.2 Computer Stands
+grep("Stand", Product_type)
+Product_type[grep("Stand", Product_type)] <- "Computer Stands"
+Product_type
+grep("Mount", Product_type)
+Product_type[grep("Mount", Product_type)] <- "Computer Stands"
+Product_type
+sum(Product_type == "Computer Stands")
+
+## 5.1.3 Computer Tablets
+grep("iPad", Product_type)
+Product_type[grep("iPad", Product_type)] <- "Computer Tablets"
+Product_type
+grep("HD Tablet", Product_type)
+Product_type[grep("HD Tablet", Product_type)] <- "Computer Tablets"
+Product_type
+grep("Galaxy Tab", Product_type)
+Product_type[grep("Galaxy Tab", Product_type)] <- "Computer Tablets"
+Product_type
+grep("Kindle", Product_type)
+Product_type[grep("Kindle", Product_type)] <- "Computer Tablets"
+Product_type
+sum(Product_type == "Computer Tablets")
+
+## 5.1.4 Smart Home Devices
+grep("Apple TV", Product_type)
+Product_type[grep("Apple TV", Product_type)] <- "Smart Home Devices"
+Product_type
+
+grep("Google Home", Product_type)
+Product_type[grep("Google Home", Product_type)] <- "Smart Home Devices"
+Product_type
+
+grep("Smart Light Bulb", Product_type)
+Product_type[grep("Smart Light Bulb", Product_type)] <- "Smart Home Devices"
+Product_type
+
+grep("Fire TV Stick", Product_type)
+Product_type[grep("Fire TV Stick", Product_type)] <- "Smart Home Devices"
+Product_type
+
+grep("Roku Express", Product_type)
+Product_type[grep("Roku Express", Product_type)] <- "Smart Home Devices"
+Product_type
+
+## 5.1.5 Printer Ink
+grep("Ink", Product_type)
+Product_type[grep("Ink", Product_type)] <- "Printer Ink"
+Product_type
+
+grep("Toner", Product_type)
+Product_type[grep("Toner", Product_type)] <- "Printer Ink"
+Product_type
+
+grep("Labeling Tape", Product_type)
+Product_type[grep("Labeling Tape", Product_type)] <- "Printer Ink"
+Product_type
+
+sum(Product_type == "Printer Ink")
+### C: 5 printer ink
+
+## 5.1.6 Printers
+grep("Epson Printer", Product_type)
+Product_type[grep("Epson Printer", Product_type)] <- "Printers"
+
+grep("HP Wireless Printer", Product_type)
+Product_type[grep("HP Wireless Printer", Product_type)] <- "Printers"
+
+grep("Canon Office Printer", Product_type)
+Product_type[grep("Canon Office Printer", Product_type)] <- "Printers"
+
+grep("Brother Printer", Product_type)
+Product_type[grep("Brother Printer", Product_type)] <- "Printers"
+
+grep("DYMO Label Manker", Product_type)
+Product_type[grep("DYMO Label Manker", Product_type)] <- "Printers"
+Product_type
+sum(Product_type == "Printers")
+
+## 5.1.6 Speakers
+grep("Speaker", Product_type)
+Product_type[grep("Speaker", Product_type)] <- "Speakers"
+Product_type
+sum(Product_type == "Speakers")
+
+grep("DOSS Touch", Product_type)
+Product_type[grep("DOSS Touch", Product_type)] <- "Speakers"
+sum(Product_type == "Speakers")
+
+grep("Cyber Acoustics", Product_type)
+Product_type[grep("Cyber Acoustics", Product_type)] <- "Speakers"
+sum(Product_type == "Speakers")
+
+grep("Sonos", Product_type)
+Product_type[grep("Sonos", Product_type)] <- "Speakers"
+sum(Product_type == "Speakers")
+Product_type
 
 
 
+
+#### 5. Apply model ####
+
+Rules_1 <- apriori(ElectronidexTransactions_clean, parameter = list(supp=0.01, conf=0.01, minlen = 2 ))
+inspect(Rules_1)
+summary(Rules_1)
+
+str(ElectronidexTransactions_clean)
+
+??grep
