@@ -1166,3 +1166,50 @@ plot(sort(Rules_comp_brand, method="matrix", control=list(K=10), by ="confidence
 
 plot(sort(Rules_comp_brand, by ="confidence")[1:10], method="graph")
 plot(sort(Rules_comp_brand, by ="lift")[1:10], method="graph")
+
+#### 12. Apply model // individual ####
+
+## 11.1 general
+Rules_ind_1 <- apriori(ElectronidexTransactions_individual, parameter = list(supp=0.01, conf=0.01))
+inspect(Rules_ind_1)
+inspect(head((sort(Rules_ind_1, by="confidence")), n=20))
+summary(Rules_ind_1)
+plot(Rules_ind_1)
+
+## 11.2 by product type
+
+TransactionsInd_Type <- aggregate(ElectronidexTransactions_individual ,by = "Product_type")
+
+## 11.2.1 by product type, with LHS as desktops or laptops
+
+Rules_ind_type_LHS <- apriori(TransactionsInd_Type, parameter= list(supp= 0.0001, conf = 0.1, minlen = 2),
+                               appearance = list(lhs=c("Desktops", "Laptops")))
+
+inspect(head((sort(Rules_ind_type_LHS, by="lift")), n=20))
+inspect(head((sort(Rules_ind_type_LHS, by="confidence")), n=20))
+summary(Rules_ind_type_LHS)
+plot(Rules_ind_type_LHS)
+plot(Rules_ind_type_LHS, method="graph")
+plot(sort(Rules_ind_type_LHS, method="grouped", control=list(K=10), by ="confidence")[1:10])
+plot(sort(Rules_ind_type_LHS, method="matrix", control=list(K=10), by ="confidence")[1:10])
+
+plot(sort(Rules_ind_type_LHS, by ="confidence")[1:10], method="graph")
+plot(sort(Rules_ind_type_LHS, by ="lift")[1:10], method="graph")
+
+## 11.2.2 by product brand 
+
+TransactionsInd_Brand <- aggregate(ElectronidexTransactions_individual ,by = "Product_brand")
+
+Rules_ind_brand <- apriori(TransactionsInd_Brand, parameter= list(supp= 0.0001, conf = 0.1, minlen = 2))
+
+inspect(head((sort(Rules_ind_brand, by="lift")), n=20))
+inspect(head((sort(Rules_ind_brand, by="confidence")), n=20))
+summary(Rules_ind_brand)
+plot(Rules_ind_brand)
+
+plot(Rules_ind_brand, method="graph")
+plot(sort(Rules_ind_brand, method="grouped", control=list(K=10), by ="confidence")[1:10])
+plot(sort(Rules_ind_brand, method="matrix", control=list(K=10), by ="confidence")[1:10])
+
+plot(sort(Rules_ind_brand, by ="confidence")[1:10], method="graph")
+plot(sort(Rules_ind_brand, by ="lift")[1:10], method="graph")
