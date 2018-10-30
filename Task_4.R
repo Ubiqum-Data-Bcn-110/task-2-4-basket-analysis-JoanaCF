@@ -595,6 +595,7 @@ str(ElectronidexTransactions_clean)
 
 Product_brand <-ElectronidexTransactions_clean@itemInfo$labels
 ElectronidexTransactions_clean@itemInfo$labels -> Product_brand
+str(ElectronidexTransactions_clean)
 
 ## 6.1 Apple
 grep("Apple", Product_brand)
@@ -612,42 +613,232 @@ sum(Product_brand == "Apple")
 grep("iMac", Product_brand)
 Product_brand[grep("iMac", Product_brand)] <- "Apple"
 sum(Product_brand == "Apple")
-
 ### C: 11 Apple products
 
 ## 6.2 Logitech
+grep("Logitech", Product_brand)
+Product_brand[grep("Logitech", Product_brand)] <- "Logitech"
+sum(Product_brand == "Logitech")
+### C: 11 Logitech products
 
 ## 6.3 Lenovo
+grep("Lenovo", Product_brand)
+Product_brand[grep("Lenovo", Product_brand)] <- "Lenovo"
+sum(Product_brand == "Lenovo")
+### C: 1 Lenovo product
+
 
 ## 6.4 ASUS
+grep("ASUS", Product_brand)
+Product_brand[grep("ASUS", Product_brand)] <- "ASUS"
+sum(Product_brand == "ASUS")
+### C: 4 ASUS products
 
 ## 6.5 Acer
 
+grep("Acer", Product_brand)
+Product_brand[grep("Acer", Product_brand)] <- "Acer"
+sum(Product_brand == "Acer")
+### C: 3 Acer products
+
 ## 6.6 HP
+grep("HP", Product_brand)
+Product_brand[grep("HP", Product_brand)] <- "HP"
+sum(Product_brand == "HP")
+### C: 8 HP products
 
 ## 6.7 Samsung
+grep("Samsung", Product_brand)
+Product_brand[grep("Samsung", Product_brand)] <- "Samsung"
+sum(Product_brand == "Samsung")
+### C: 3 Samsung products
 
 ## 6.8 ViewSonic
+grep("ViewSonic", Product_brand)
+Product_brand[grep("ViewSonic", Product_brand)] <- "ViewSonic"
+sum(Product_brand == "ViewSonic")
+### C: 1 ViewSonic products
 
 ## 6.9 Microsoft
+grep("Microsoft", Product_brand)
+Product_brand[grep("Microsoft", Product_brand)] <- "Microsoft"
+sum(Product_brand == "Microsoft")
+### C: 5 Microsoft products
 
-## 6.10 Others
+## 6.10 Rii
+grep("Rii", Product_brand)
+Product_brand[grep("Rii", Product_brand)] <- "Rii"
+sum(Product_brand == "Rii")
+### C: 2 Rii products
 
-## 6.11 Rii
+## 6.11 Panasonic
+grep("Panasonic", Product_brand)
+Product_brand[grep("Panasonic", Product_brand)] <- "Panasonic"
+sum(Product_brand == "Panasonic")
+### C: 2 Panasonic products
 
-Panasonic
-DYMO
-Canon
-Epson
-Low profile brands
+## 6.12 DYMO
+grep("DYMO", Product_brand)
+Product_brand[grep("DYMO", Product_brand)] <- "DYMO"
+sum(Product_brand == "DYMO")
+### C: 2 DYMO products
+
+## 6.13 Canon
+grep("Canon", Product_brand)
+Product_brand[grep("Canon", Product_brand)] <- "Canon"
+sum(Product_brand == "Canon")
+### C: 2 Canon products
+
+## 6.14 Epson
+grep("Epson", Product_brand)
+Product_brand[grep("Epson", Product_brand)] <- "Epson"
+sum(Product_brand == "Epson")
+### C: 2 Epson products
+
+Product_brand
+
+## 6.15 Other brands
+grep("CYBERPOWER", Product_brand)
+Product_brand[grep("CYBERPOWER", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("APIE", Product_brand)
+Product_brand[grep("APIE", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("Ailihen", Product_brand)
+Product_brand[grep("Ailihen", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("ViewSonic", Product_brand)
+Product_brand[grep("ViewSonic", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("Headphones", Product_brand)
+Product_brand[grep("Headphones", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("Headphones", Product_brand)
+Product_brand[grep("Headphones", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+str(ElectronidexTransactions_clean)
+Product_brand
+
+grep("Portable", Product_brand)
+Product_brand[grep("Portable", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("3-Button Mouse", Product_brand)
+Product_brand[grep("3-Button Mouse", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("5TB Desktop Hard Drive", Product_brand)
+Product_brand[grep("5TB Desktop Hard Drive", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("Mouse", Product_brand)
+Product_brand[grep("Mouse", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("Monitor", Product_brand)
+Product_brand[grep("Monitor", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("Headset", Product_brand)
+Product_brand[grep("Headset", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("Headphone", Product_brand)
+Product_brand[grep("Headphone", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("Speaker", Product_brand)
+Product_brand[grep("Speaker", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+Product_brand
+
+grep("Roku Express", Product_brand)
+Product_brand[grep("Roku Express", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("USB", Product_brand)
+Product_brand[grep("USB", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("Light", Product_brand)
+Product_brand[grep("Light", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("Laptop", Product_brand)
+Product_brand[grep("Laptop", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("Monster", Product_brand)
+Product_brand[grep("Monster", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+Product_brand
+
+grep("Stand", Product_brand)
+Product_brand[grep("Stand", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+Product_brand
+
+grep("Cable", Product_brand)
+Product_brand[grep("Cable", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("Kindle", Product_brand)
+Product_brand[grep("Kindle", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("HDMI", Product_brand)
+Product_brand[grep("HDMI", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("Google", Product_brand)
+Product_brand[grep("Google", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("Printer", Product_brand)
+Product_brand[grep("Printer", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("DOSS", Product_brand)
+Product_brand[grep("DOSS", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("Button", Product_brand)
+Product_brand[grep("Button", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("Sonos", Product_brand)
+Product_brand[grep("Sonos", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("Fire", Product_brand)
+Product_brand[grep("Fire", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("Cyber", Product_brand)
+Product_brand[grep("Cyber", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+### C: 61 Producst of Other brands
 
 str(ElectronidexTransactions_clean)
 
 
 
+## 6.16 Dell
+grep("Dell", Product_brand)
+Product_brand[grep("Dell", Product_brand)] <- "Dell"
+sum(Product_brand == "Dell")
 
-
-
+Product_brand
+ElectronidexTransactions_clean@itemInfo$Product_brand <- Product_brand
+str(ElectronidexTransactions_clean)
 
 
 #### 7. Apply model ####
