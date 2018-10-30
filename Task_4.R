@@ -294,19 +294,20 @@ ElectronidexTransactions_clean <- ElectronidexTransactions_new_2
 
 ### P: Clean dataset is ElectronidexTransactions_clean
 
-#### 5. Create categories
+#### 5. Create Product type categories ####
+str(ElectronidexTransactions_clean)
+Product_type <- ElectronidexTransactions_clean@itemInfo$labels
+ElectronidexTransactions_clean@itemInfo$Product_type <- Product_type
+str(ElectronidexTransactions_clean)
 
-# 5.1 Products
-## 5.1.1 External Hardrives
-Product_type <- ElectronidexTransactions_clean@itemInfo$labels 
-
+## 5.1 External Hardrives
 grep("Hard Drive", Product_type)
 Product_type[grep("Hard Drive", Product_type)]
 Product_type[grep("Hard Drive", Product_type)] <- "External Hardrives" 
 Product_type
 sum(Product_type == "External Hardrives")
 
-## 5.1.2 Computer Stands
+## 5.2 Computer Stands
 grep("Stand", Product_type)
 Product_type[grep("Stand", Product_type)] <- "Computer Stands"
 Product_type
@@ -315,7 +316,7 @@ Product_type[grep("Mount", Product_type)] <- "Computer Stands"
 Product_type
 sum(Product_type == "Computer Stands")
 
-## 5.1.3 Computer Tablets
+## 5.3 Computer Tablets
 grep("iPad", Product_type)
 Product_type[grep("iPad", Product_type)] <- "Computer Tablets"
 Product_type
@@ -330,7 +331,7 @@ Product_type[grep("Kindle", Product_type)] <- "Computer Tablets"
 Product_type
 sum(Product_type == "Computer Tablets")
 
-## 5.1.4 Smart Home Devices
+## 5.4 Smart Home Devices
 grep("Apple TV", Product_type)
 Product_type[grep("Apple TV", Product_type)] <- "Smart Home Devices"
 Product_type
@@ -367,7 +368,7 @@ Product_type
 sum(Product_type == "Printer Ink")
 ### C: 5 printer ink
 
-## 5.1.6 Printers
+## 5.5 Printers
 grep("Epson Printer", Product_type)
 Product_type[grep("Epson Printer", Product_type)] <- "Printers"
 
@@ -385,7 +386,7 @@ Product_type[grep("DYMO Label Manker", Product_type)] <- "Printers"
 Product_type
 sum(Product_type == "Printers")
 
-## 5.1.6 Speakers
+## 5.6 Speakers
 grep("Speaker", Product_type)
 Product_type[grep("Speaker", Product_type)] <- "Speakers"
 Product_type
@@ -404,7 +405,7 @@ Product_type[grep("Sonos", Product_type)] <- "Speakers"
 sum(Product_type == "Speakers")
 Product_type
 
-## 5.1.7 Laptops
+## 5.7 Laptops
 grep("Laptop", Product_type)
 Product_type[grep("Laptop", Product_type)] <- "Laptops"
 Product_type
@@ -422,7 +423,7 @@ Product_type[grep("Apple MacBook Pro", Product_type)] <- "Laptops"
 grep("Apple MacBook Air", Product_type)
 Product_type[grep("Apple MacBook Air", Product_type)] <- "Laptops"
 
-## 5.1.7 Mouse and Keyboard Combo
+## 5.8 Mouse and Keyboard Combo
 grep("Combo", Product_type)
 Product_type[grep("Combo", Product_type)] <- "Mouse and Keyboard Combo"
 sum(Product_type == "Mouse and Keyboard Combo")
@@ -435,7 +436,7 @@ grep("Keyboard and Mouse", Product_type)
 Product_type[grep("Keyboard and Mouse", Product_type)] <- "Mouse and Keyboard Combo"
 sum(Product_type == "Mouse and Keyboard Combo")
 
-## 5.1.8 Desktops
+## 5.9 Desktops
 grep("Desktops", Product_type)
 Product_type[grep("Desktop", Product_type)] <- "Desktops"
 sum(Product_type == "Desktops")
@@ -444,7 +445,7 @@ grep("iMac", Product_type)
 Product_type[grep("iMac", Product_type)] <- "Desktops"
 sum(Product_type == "Desktops")
 
-## 5.1.9 Computer Cords
+## 5.10 Computer Cords
 grep("Cable", Product_type)
 Product_type[grep("Cable", Product_type)] <- "Computer Cords"
 sum(Product_type == "Computer Cords")
@@ -453,12 +454,12 @@ grep("HDMI Adapter", Product_type)
 Product_type[grep("HDMI Adapter", Product_type)] <- "Computer Cords"
 sum(Product_type == "Computer Cords")
 
-## 5.1.10 Monitors
+## 5.11 Monitors
 grep("Monitor", Product_type)
 Product_type[grep("Monitor", Product_type)] <- "Monitors"
 sum(Product_type == "Monitors")
 
-## 5.1.11 Accessories
+## 5.12 Accessories
 grep("Microsoft Office Home and Student 2016", Product_type)
 Product_type[grep("Microsoft Office Home and Student 2016", Product_type)] <- "Accessories"
 sum(Product_type == "Accessories")
@@ -469,7 +470,7 @@ Product_type[grep("Computer Game", Product_type)] <- "Accessories"
 grep("Mouse Pad", Product_type)
 Product_type[grep("Mouse Pad", Product_type)] <- "Accessories"
 
-## 5.1.12 Active Headphones
+## 5.13 Active Headphones
 grep("Apple Earpods", Product_type)
 Product_type[grep("Apple Earpods", Product_type)] <- "Active Headphones"
 sum(Product_type == "Active Headphones")
@@ -494,7 +495,7 @@ grep("Philips", Product_type)
 Product_type[grep("Philips", Product_type)] <- "Active Headphones"
 sum(Product_type == "Active Headphones")
 
-## 5.1.12 Computer Headphones
+## 5.14 Computer Headphones
 grep("Headset", Product_type)
 Product_type[grep("Headset", Product_type)] <- "Computer Headphones"
 sum(Product_type == "Computer Headphones")
@@ -517,7 +518,7 @@ sum(Product_type == "Computer Headphones")
 
 Product_type
 
-## 5.1.13 Computer Mice
+## 5.15 Computer Mice
 grep("3-Button Mouse", Product_type)
 Product_type[grep("3-Button Mouse", Product_type)] <- "Computer Mice"
 sum(Product_type == "Computer Mice")
@@ -560,8 +561,7 @@ sum(Product_type == "Computer Mice")
 
 Product_type
 
-
-## 5.1.14 Keyboards
+## 5.16 Keyboards
 
 grep("LED", Product_type)
 Product_type[grep("LED", Product_type)] <- "Keyboards"
@@ -588,18 +588,76 @@ Product_type[grep("HP USB Keyboard", Product_type)] <- "Keyboards"
 sum(Product_type == "Keyboards")
 
 Product_type
-
+ElectronidexTransactions_clean@itemInfo$Product_type <- Product_type
 str(ElectronidexTransactions_clean)
-str(ElectronidexTransactions)
+
+#### 6. Create brand categories ####
+
+Product_brand <-ElectronidexTransactions_clean@itemInfo$labels
+Product_brand
+
+## 6.1 Apple
+grep("Apple", Product_brand)
+Product_brand[grep("Apple", Product_brand)] <- "Apple"
+sum(Product_brand == "Apple")
+
+grep("iPad", Product_brand)
+Product_brand[grep("iPad", Product_brand)] <- "Apple"
+sum(Product_brand == "Apple")
+
+grep("iPhone", Product_brand)
+Product_brand[grep("iPhone", Product_brand)] <- "Apple"
+sum(Product_brand == "Apple")
+
+grep("iMac", Product_brand)
+Product_brand[grep("iMac", Product_brand)] <- "Apple"
+sum(Product_brand == "Apple")
+
+### C: 11 Apple products
+
+## 6.2 Logitech
+
+## 6.3 Lenovo
+
+## 6.4 ASUS
+
+## 6.5 Acer
+
+## 6.6 HP
+
+## 6.7 Samsung
+
+## 6.8 ViewSonic
+
+## 6.9 Microsoft
+
+## 6.10 Others
+
+## 6.11 Rii
+
+Panasonic
+DYMO
+Canon
+Epson
 
 
 
-#### 5. Apply model ####
+
+
+
+
+
+
+
+#### 7. Apply model ####
 
 Rules_1 <- apriori(ElectronidexTransactions_clean, parameter = list(supp=0.01, conf=0.01, minlen = 2 ))
 inspect(Rules_1)
 summary(Rules_1)
 
-str(ElectronidexTransactions_clean)
+install.packages("arulesViz")
+library(arulesViz)
+install.packages("grid")
+plot(Rules_1)
 
-??grep
+ElectronidexTransactions_clean@itemInfo$labels 
