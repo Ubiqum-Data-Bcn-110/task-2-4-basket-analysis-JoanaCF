@@ -1071,17 +1071,25 @@ summary(ElectronidexTransactions_new_5)
 TransactionsWholesale <- ElectronidexTransactions_new_5
 TransactionsCompany <- TransactionsWholesale
 summary(TransactionsCompany)
- ### P: dataset as a wholesale is named TransactionsWholesale
 
 SizeTransactionsWholesale <- size(TransactionsCompany)
 SizeTransactionsCompany <- SizeTransactionsWholesale
 hist(SizeTransactionsCompany)
 plot(SizeTransactionsCompany)
+### P: dataset as a wholesale is named TransactionsCompany
+
 
 # 10.2.2 - Create reatail dataset / individual
 
 sum(sizetransactions_new == "1") + sum(sizetransactions_new == "2") + sum(sizetransactions_new == "3") + sum(sizetransactions_new == "4") + sum(sizetransactions_new == "5")
 ### C: 6981 transactions made as a retailer, to individuals
 
+summary(ElectronidexTransactions_new)
+ElectronidexTransactions_new_6 <- ElectronidexTransactions_new[!size(ElectronidexTransactions_new) > 5]
+summary(ElectronidexTransactions_new_6)
 
+TransactionsIndividuals <- ElectronidexTransactions_new_6
+SizeTransactionsIndividuals <-size(TransactionsIndividuals)
+hist(SizeTransactionsIndividuals)
+### P: dataset as a retailer is named TransactionsIndividuals
 
