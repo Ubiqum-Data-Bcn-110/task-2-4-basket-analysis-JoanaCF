@@ -1032,7 +1032,7 @@ sum(sizetransactions == "0")
 sum(sizetransactions == "1")
 ### P - list of items
 
-#### 10. Split datasets ####
+#### 10. Split datasets - Company vs Individuals ####
 
 ## 10.1 Take out the 0 
 sum(sizetransactions == "0")
@@ -1078,9 +1078,7 @@ hist(SizeTransactionsCompany)
 plot(SizeTransactionsCompany)
 ### P: dataset as a wholesale is named TransactionsCompany
 
-
 # 10.2.2 - Create reatail dataset / individual
-
 sum(sizetransactions_new == "1") + sum(sizetransactions_new == "2") + sum(sizetransactions_new == "3") + sum(sizetransactions_new == "4") + sum(sizetransactions_new == "5")
 ### C: 6981 transactions made as a retailer, to individuals
 
@@ -1092,4 +1090,38 @@ TransactionsIndividuals <- ElectronidexTransactions_new_6
 SizeTransactionsIndividuals <-size(TransactionsIndividuals)
 hist(SizeTransactionsIndividuals)
 ### P: dataset as a retailer is named TransactionsIndividuals
+
+
+#### 11. Apply model to Company dataset // general ####
+
+Rules_company <- apriori(TransactionsCompany, parameter = list(supp=0.1, conf=0.8, minlen = "2"))
+inspect(Rules_company)
+### C: Nothing 
+
+Rules_company_sup0.01_conf0.1 <- apriori(TransactionsCompany, parameter = list(supp=0.01, conf=0.1, minlen = "2"))
+inspect(Rules_company_sup0.01_conf0.1)
+inspect(head((sort(Rules_company_sup0.01_conf0.1, by="confidence")), n=20))
+summary(Rules_company_sup0.01_conf0.1)
+plot(Rules_company_sup0.01_conf0.1)
+inspect(head((sort(Rules_company_sup0.01_conf0.1, by="lift")), n=20))
+summary(Rules_company_sup0.01_conf0.1)
+plot(Rules_company_sup0.01_conf0.1)
+
+plot(Rules_company_sup0.01_conf0.1[1:5], method="graph", control=list(type="items")) 
+
+Rules_C_LHS <- apriori(TransacyionsCompany, parameter= list(supp= 0.01, conf = 0.1),
+                           appearance = list(lhs=c("iMac")))
+inspect(Rules_C_LHS)
+plot(Rules_C_LHS[1:10],method = "graph", control = list(type="items"))
+### C: nada
+
+#### 12. Apply model to Individual dataset // general #### 
+
+Rules_individual <- apriori(TransactionsIndividuals, parameter = list(supp=0.1, conf=0.8, minlen = "2"))
+inspect(Rules_individual)
+### C: Nothing 
+
+Rules_indiv_sup0.01_conf0.1 <- apriori(TransactionsIndividuals, parameter = list(supp=0.01, conf=0.1, minlen = "2"))
+inspect(Rules_indiv_sup0.01_conf0.1)
+plot(Rules_indiv_sup0.01_conf0.1)
 
