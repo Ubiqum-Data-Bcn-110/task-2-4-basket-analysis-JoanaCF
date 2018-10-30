@@ -594,7 +594,7 @@ str(ElectronidexTransactions_clean)
 #### 6. Create brand categories ####
 
 Product_brand <-ElectronidexTransactions_clean@itemInfo$labels
-Product_brand
+ElectronidexTransactions_clean@itemInfo$labels -> Product_brand
 
 ## 6.1 Apple
 grep("Apple", Product_brand)
@@ -639,8 +639,9 @@ Panasonic
 DYMO
 Canon
 Epson
+Low profile brands
 
-
+str(ElectronidexTransactions_clean)
 
 
 
