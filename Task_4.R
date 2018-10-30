@@ -591,7 +591,6 @@ ElectronidexTransactions_clean@itemInfo$Product_type <- Product_type
 str(ElectronidexTransactions_clean)
 
 #### 6. Create brand categories ####
-
 Product_brand <-ElectronidexTransactions_clean@itemInfo$labels
 ElectronidexTransactions_clean@itemInfo$labels -> Product_brand
 str(ElectronidexTransactions_clean)
@@ -941,16 +940,31 @@ str(ElectronidexTransactions_clean)
 ElectronidexTransactions_clean@itemInfo$Product_type_t <- Product_type_t
 str(ElectronidexTransactions_clean)
 
-
 #### 8. Apply model ####
 
 Rules_1 <- apriori(ElectronidexTransactions_clean, parameter = list(supp=0.01, conf=0.01, minlen = 2 ))
 inspect(Rules_1)
+inspect(head((sort(Rules_1, by="confidence")), n=20))
 summary(Rules_1)
-
-install.packages("arulesViz")
-library(arulesViz)
-install.packages("grid")
 plot(Rules_1)
 
-ElectronidexTransactions_clean@itemInfo$labels 
+### P: to check top 20 rules, sorted by confidence and lift
+Rules_2 <- apriori(ElectronidexTransactions_clean, parameter = list(supp=0.02, conf=0.1, minlen = 2 ))
+inspect(Rules_2)
+inspect(head((sort(Rules_2, by="confidence")), n=20))
+inspect(head((sort(Rules_2, by="lift")), n=20))
+summary(Rules_2)
+plot(Rules_2)
+
+### P: to check rules wuth iMac
+ItemRules_2_iMac <- subset(Rules_2, items %in% "iMac")
+inspect(ItemRules_2_iMac)
+sum(is.redundant(Rules_2)== "TRUE")
+
+
+plot(Rules_2[20], method="graph", control=list(type="items")) 
+### C/D: I can't interpret the graph
+
+### Rules by category (3)
+### Plot and discuss plot with other parameters 
+### Discuss Rules break down  - how to do it? 
