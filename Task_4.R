@@ -295,10 +295,9 @@ ElectronidexTransactions_clean <- ElectronidexTransactions_new_2
 ### P: Clean dataset is ElectronidexTransactions_clean
 
 #### 5. Create Product type categories ####
+
 str(ElectronidexTransactions_clean)
 Product_type <- ElectronidexTransactions_clean@itemInfo$labels
-ElectronidexTransactions_clean@itemInfo$Product_type <- Product_type
-str(ElectronidexTransactions_clean)
 
 ## 5.1 External Hardrives
 grep("Hard Drive", Product_type)
@@ -627,6 +626,10 @@ Product_brand[grep("Lenovo", Product_brand)] <- "Lenovo"
 sum(Product_brand == "Lenovo")
 ### C: 1 Lenovo product
 
+## 6.3// Dell
+grep("Dell", Product_brand)
+Product_brand[grep("Dell", Product_brand)] <- "Dell"
+sum(Product_brand == "Dell")
 
 ## 6.4 ASUS
 grep("ASUS", Product_brand)
@@ -825,23 +828,121 @@ grep("Cyber", Product_brand)
 Product_brand[grep("Cyber", Product_brand)] <- "Other brands"
 sum(Product_brand == "Other brands")
 
-### C: 61 Producst of Other brands
+grep("Intel", Product_brand)
+Product_brand[grep("Intel", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("Game", Product_brand)
+Product_brand[grep("Game", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+grep("LED", Product_brand)
+Product_brand[grep("LED", Product_brand)] <- "Other brands"
+sum(Product_brand == "Other brands")
+
+### C: 63 Producst of Other brands
 
 str(ElectronidexTransactions_clean)
 
 
-
-## 6.16 Dell
-grep("Dell", Product_brand)
-Product_brand[grep("Dell", Product_brand)] <- "Dell"
-sum(Product_brand == "Dell")
 
 Product_brand
 ElectronidexTransactions_clean@itemInfo$Product_brand <- Product_brand
 str(ElectronidexTransactions_clean)
 
 
-#### 7. Apply model ####
+#### 7. Create uses type categories - computers and computers accessories####
+
+str(ElectronidexTransactions_clean)
+Product_type_t <- ElectronidexTransactions_clean@itemInfo$labels
+Product_type_t
+ElectronidexTransactions_clean@itemInfo$Product_type_t <- Product_type
+str(ElectronidexTransactions_clean)
+Product_type_t <- ElectronidexTransactions_clean@itemInfo$Product_type_t 
+Product_type_t
+str(ElectronidexTransactions_clean)
+
+## 7.1 Computers
+
+grep("Laptops", Product_type_t)
+Product_type_t[grep("Laptops", Product_type_t)] <- "Computers"
+sum(Product_type_t == "Computers")
+
+Product_type_t
+
+grep("Desktops", Product_type_t)
+Product_type_t[grep("Desktops", Product_type_t)] <- "Computers"
+sum(Product_type_t == "Computers")
+### C: 19 computers items
+
+## 7.2 Computers accessories
+
+grep("Monitors", Product_type_t)
+Product_type_t[grep("Monitors", Product_type_t)] <- "Computer-related devices"
+sum(Product_type_t == "Computer-related devices")
+
+grep("Computer Mice", Product_type_t)
+Product_type_t[grep("Computer Mice", Product_type_t)] <- "Computer-related devices"
+sum(Product_type_t == "Computer-related devices")
+
+grep("Keyboard", Product_type_t)
+Product_type_t[grep("Keyboard", Product_type_t)] <- "Computer-related devices"
+sum(Product_type_t == "Computer-related devices")
+
+grep("Computer Headphones", Product_type_t)
+Product_type_t[grep("Computer Headphones", Product_type_t)] <- "Computer-related devices"
+sum(Product_type_t == "Computer-related devices")
+
+grep("Computer Cords", Product_type_t)
+Product_type_t[grep("Computer Cords", Product_type_t)] <- "Computer-related devices"
+sum(Product_type_t == "Computer-related devices")
+
+grep("Printer", Product_type_t)
+Product_type_t[grep("Printer", Product_type_t)] <- "Computer-related devices"
+sum(Product_type_t == "Computer-related devices")
+
+grep("Computer Stands", Product_type_t)
+Product_type_t[grep("Computer Stands", Product_type_t)] <- "Computer-related devices"
+sum(Product_type_t == "Computer-related devices")
+
+grep("External", Product_type_t)
+Product_type_t[grep("External", Product_type_t)] <- "Computer-related devices"
+sum(Product_type_t == "Computer-related devices")
+### C: 77 items belonging to computers accessories
+
+Product_type_t
+
+grep("Speakers", Product_type_t)
+Product_type_t[grep("Speakers", Product_type_t)] <- "Other devices"
+sum(Product_type_t == "Other devices")
+
+Product_type_t
+
+grep("Smart", Product_type_t)
+Product_type_t[grep("Smart", Product_type_t)] <- "Other devices"
+sum(Product_type_t == "Other devices")
+
+Product_type_t
+
+grep("Tablets", Product_type_t)
+Product_type_t[grep("Tablets", Product_type_t)] <- "Other devices"
+sum(Product_type_t == "Other devices")
+
+grep("Active", Product_type_t)
+Product_type_t[grep("Active", Product_type_t)] <- "Other devices"
+sum(Product_type_t == "Other devices")
+
+grep("Accessories", Product_type_t)
+Product_type_t[grep("Accessories", Product_type_t)] <- "Other devices"
+sum(Product_type_t == "Other devices")
+### C: 29 Other devices
+
+str(ElectronidexTransactions_clean)
+ElectronidexTransactions_clean@itemInfo$Product_type_t <- Product_type_t
+str(ElectronidexTransactions_clean)
+
+
+#### 8. Apply model ####
 
 Rules_1 <- apriori(ElectronidexTransactions_clean, parameter = list(supp=0.01, conf=0.01, minlen = 2 ))
 inspect(Rules_1)
