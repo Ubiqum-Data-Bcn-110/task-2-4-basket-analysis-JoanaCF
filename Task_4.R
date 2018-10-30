@@ -1032,7 +1032,7 @@ sum(sizetransactions == "0")
 sum(sizetransactions == "1")
 ### P - list of items
 
-#### 10. Split datasets - Company vs Individuals ####
+#### 10.a) Split datasets - Company vs Individuals ####
 
 ## 10.1 Take out the 0 
 sum(sizetransactions == "0")
@@ -1092,36 +1092,77 @@ hist(SizeTransactionsIndividuals)
 ### P: dataset as a retailer is named TransactionsIndividuals
 
 
-#### 11. Apply model to Company dataset // general ####
+#### 10.b) split retail vs wholesale // individuals vs companies ####
 
-Rules_company <- apriori(TransactionsCompany, parameter = list(supp=0.1, conf=0.8, minlen = "2"))
-inspect(Rules_company)
-### C: Nothing 
+# 10.1 - Create reatail dataset // individual
 
-Rules_company_sup0.01_conf0.1 <- apriori(TransactionsCompany, parameter = list(supp=0.01, conf=0.1, minlen = "2"))
-inspect(Rules_company_sup0.01_conf0.1)
-inspect(head((sort(Rules_company_sup0.01_conf0.1, by="confidence")), n=20))
-summary(Rules_company_sup0.01_conf0.1)
-plot(Rules_company_sup0.01_conf0.1)
-inspect(head((sort(Rules_company_sup0.01_conf0.1, by="lift")), n=20))
-summary(Rules_company_sup0.01_conf0.1)
-plot(Rules_company_sup0.01_conf0.1)
+ElectronidexTransactions_individual <- ElectronidexTransactions_clean[!size(ElectronidexTransactions_clean) > 5]
+summary(ElectronidexTransactions_individual)
+str(ElectronidexTransactions_individual)
+list(ElectronidexTransactions_individual)
 
-plot(Rules_company_sup0.01_conf0.1[1:5], method="graph", control=list(type="items")) 
+itemFrequencyPlot(ElectronidexTransactions_individual,  type = "absolute", topN =10)
 
-Rules_C_LHS <- apriori(TransacyionsCompany, parameter= list(supp= 0.01, conf = 0.1),
-                           appearance = list(lhs=c("iMac")))
-inspect(Rules_C_LHS)
-plot(Rules_C_LHS[1:10],method = "graph", control = list(type="items"))
-### C: nada
+### ! no tiene las transacciones con 1 producto
 
-#### 12. Apply model to Individual dataset // general #### 
+# 10.1 - Create reatail dataset // company
 
-Rules_individual <- apriori(TransactionsIndividuals, parameter = list(supp=0.1, conf=0.8, minlen = "2"))
-inspect(Rules_individual)
-### C: Nothing 
+ElectronidexTransactions_company <- ElectronidexTransactions_clean[!size(ElectronidexTransactions_clean) <= 5]
+summary(ElectronidexTransactions_company)
+str(ElectronidexTransactions_company)
+list(ElectronidexTransactions_company)
+itemFrequencyPlot(ElectronidexTransactions_company, type = "absolute", topN =10)
 
-Rules_indiv_sup0.01_conf0.1 <- apriori(TransactionsIndividuals, parameter = list(supp=0.01, conf=0.1, minlen = "2"))
-inspect(Rules_indiv_sup0.01_conf0.1)
-plot(Rules_indiv_sup0.01_conf0.1)
+#### 11. Apply model // company ####
 
+## 11.1 general
+Rules_comp_1 <- apriori(ElectronidexTransactions_company, parameter = list(supp=0.01, conf=0.01))
+inspect(Rules_comp_1)
+inspect(head((sort(Rules_comp_1, by="confidence")), n=20))
+summary(Rules_comp_1)
+plot(Rules_comp_1)
+
+## 11.2 by product type
+
+TransactionsComp_Type <- aggregate(ElectronidexTransactions_company ,by = "Product_type")
+
+Rules_comp_type <- apriori(TransactionsComp_Type, parameter = list(supp=0.01, conf=0.01))
+inspect(Rules_comp_type)
+inspect(head((sort(Rules_comp_type, by="confidence")), n=20))
+inspect(head((sort(Rules_comp_type, by="lift")), n=20))
+summary(Rules_comp_type)
+plot(Rules_comp_type)
+
+## 11.2.1 by product type, with LHS as desktops or laptops
+
+Rules_comp_type_LHS <- apriori(TransactionsComp_Type, parameter= list(supp= 0.0001, conf = 0.1, minlen = 2),
+                           appearance = list(lhs=c("Desktops", "Laptops")))
+
+inspect(head((sort(Rules_comp_type_LHS, by="lift")), n=20))
+inspect(head((sort(Rules_comp_type_LHS, by="confidence")), n=20))
+summary(Rules_comp_type_LHS)
+plot(Rules_comp_type_LHS)
+plot(Rules_comp_type_LHS, method="graph")
+plot(sort(Rules_comp_type_LHS, method="grouped", control=list(K=10), by ="confidence")[1:10])
+plot(sort(Rules_comp_type_LHS, method="matrix", control=list(K=10), by ="confidence")[1:10])
+
+plot(sort(Rules_comp_type_LHS, by ="confidence")[1:10], method="graph")
+plot(sort(Rules_comp_type_LHS, by ="lift")[1:10], method="graph")
+
+## 11.2.1 by product brand, with LHS as desktops or laptops
+
+TransactionsComp_Brand <- aggregate(ElectronidexTransactions_company ,by = "Product_brand")
+
+Rules_comp_brand <- apriori(TransactionsComp_Brand, parameter= list(supp= 0.0001, conf = 0.1, minlen = 2))
+
+inspect(head((sort(Rules_comp_brand, by="lift")), n=20))
+inspect(head((sort(Rules_comp_brand, by="confidence")), n=20))
+summary(Rules_comp_brand)
+plot(Rules_comp_brand)
+
+plot(Rules_comp_brand, method="graph")
+plot(sort(Rules_comp_brand, method="grouped", control=list(K=10), by ="confidence")[1:10])
+plot(sort(Rules_comp_brand, method="matrix", control=list(K=10), by ="confidence")[1:10])
+
+plot(sort(Rules_comp_brand, by ="confidence")[1:10], method="graph")
+plot(sort(Rules_comp_brand, by ="lift")[1:10], method="graph")
