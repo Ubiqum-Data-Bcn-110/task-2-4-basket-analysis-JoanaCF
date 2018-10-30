@@ -839,12 +839,10 @@ grep("LED", Product_brand)
 Product_brand[grep("LED", Product_brand)] <- "Other brands"
 sum(Product_brand == "Other brands")
 
+
 ### C: 63 Producst of Other brands
 
 str(ElectronidexTransactions_clean)
-
-
-
 Product_brand
 ElectronidexTransactions_clean@itemInfo$Product_brand <- Product_brand
 str(ElectronidexTransactions_clean)
@@ -862,7 +860,6 @@ Product_type_t
 str(ElectronidexTransactions_clean)
 
 ## 7.1 Computers
-
 grep("Laptops", Product_type_t)
 Product_type_t[grep("Laptops", Product_type_t)] <- "Computers"
 sum(Product_type_t == "Computers")
@@ -875,7 +872,6 @@ sum(Product_type_t == "Computers")
 ### C: 19 computers items
 
 ## 7.2 Computers accessories
-
 grep("Monitors", Product_type_t)
 Product_type_t[grep("Monitors", Product_type_t)] <- "Computer-related devices"
 sum(Product_type_t == "Computer-related devices")
@@ -940,16 +936,19 @@ str(ElectronidexTransactions_clean)
 ElectronidexTransactions_clean@itemInfo$Product_type_t <- Product_type_t
 str(ElectronidexTransactions_clean)
 
+Product_type_t
+
 #### 8. Apply model ####
 
-Rules_1 <- apriori(ElectronidexTransactions_clean, parameter = list(supp=0.01, conf=0.01, minlen = 2 ))
+## 8.1 ElectronidexTransactions_clean
+Rules_1 <- apriori(ElectronidexTransactions_clean, parameter = list(supp=0.001, conf=0.01))
 inspect(Rules_1)
 inspect(head((sort(Rules_1, by="confidence")), n=20))
 summary(Rules_1)
 plot(Rules_1)
 
 ### P: to check top 20 rules, sorted by confidence and lift
-Rules_2 <- apriori(ElectronidexTransactions_clean, parameter = list(supp=0.02, conf=0.1, minlen = 2 ))
+Rules_2 <- apriori(ElectronidexTransactions_clean, parameter = list(supp=0.001, conf=0.1, minlen = 2 ))
 inspect(Rules_2)
 inspect(head((sort(Rules_2, by="confidence")), n=20))
 inspect(head((sort(Rules_2, by="lift")), n=20))
@@ -957,14 +956,132 @@ summary(Rules_2)
 plot(Rules_2)
 
 ### P: to check rules wuth iMac
-ItemRules_2_iMac <- subset(Rules_2, items %in% "iMac")
-inspect(ItemRules_2_iMac)
-sum(is.redundant(Rules_2)== "TRUE")
+ItemRules_trial <- subset(Rules_ByBrand, items %in% "Apple")
+inspect(ItemRules_trial)
+sum(is.redundant(ItemRules_trial)== "TRUE")
+plot(ItemRules_trial[1:5], method="graph", control=list(type="items")) 
+
+Rules_LHS_Apple <- apriori(TransactionsByBrand, parameter= list(supp= 0.01, conf = 0.2),
+                           appearance = list(lhs=c("Apple")))
+inspect(Rules_LHS_Apple)
+plot(Rules_LHS_Apple[1:10],method = "graph", control = list(type="items"))
 
 
-plot(Rules_2[20], method="graph", control=list(type="items")) 
+plot(Rules_2, method="graph", control=list(type="items")) 
 ### C/D: I can't interpret the graph
+
+## 8.2 By category
+TransactionsByType <- aggregate(ElectronidexTransactions_clean ,by = "Product_type")
+TransactionsByBrand <- aggregate(ElectronidexTransactions_clean, by = "Product_brand")
+TransactionsByUse <- aggregate(ElectronidexTransactions_clean, by = "Product_type_t")
+
+str(ElectronidexTransactions_clean)
+
+Rules_ByType<- apriori(TransactionsByType, parameter = list(supp=0.01, conf=0.1,  minlen = 2 ))
+inspect(sort(Rules_ByType, by = "lift") [1:10])
+summary(Rules_ByType)
+plot(Rules_ByType)
+inspect()
+
+Rules_ByBrand <- apriori(TransactionsByBrand, parameter = list(supp=0.02, conf=0.05, minlen = 2 ))
+inspect(Rules_ByBrand)
+plot(Rules_ByBrand)
+
+plot(Rules_ByBrand[1:5], method="graph", control=list(type="items")) 
+plot(Rules_ByType_sup005_conf05[1:5], method="graph", control=list(type="items")) 
+
+Rules_ByUse <- apriori(TransactionsByUse, parameter = list(supp=0.01, conf=0.01 ))
+inspect(Rules_ByUse)
+plot(Rules_ByUse)
+#### D: Lift <1
+itemFrequency(TransactionsByType)
 
 ### Rules by category (3)
 ### Plot and discuss plot with other parameters 
 ### Discuss Rules break down  - how to do it? 
+
+
+#### 9. Start from the 0 ####
+## 9.1 Explore dataset
+View(ElectronidexTransactions)
+str(ElectronidexTransactions)
+LIST(ElectronidexTransactions)
+itemInfo(ElectronidexTransactions)
+inspect(ElectronidexTransactions)
+
+itemFrequency(ElectronidexTransactions, type = "absolute")
+max(itemFrequency(ElectronidexTransactions, type = "absolute"))
+min(itemFrequency(ElectronidexTransactions, type = "absolute"))
+mean(itemFrequency(ElectronidexTransactions, type = "absolute"))
+### C: iMac - 2519
+### C: Logitech Wireless Keyboard - 22
+
+itemFrequencyPlot(ElectronidexTransactions, topN =10)
+itemFrequencyPlot(ElectronidexTransactions, topN =5)
+### C: iMac, HP Laptop, CYBERPOWER Gamer Desktop, Apple Earpods, Apple MacBook Air
+
+
+size(ElectronidexTransactions)
+sizetransactions <- size(ElectronidexTransactions)
+sum(size(ElectronidexTransactions))
+max(sizetransactions)
+min(sizetransactions)
+mean(sizetransactions)
+hist(sizetransactions)
+sum(sizetransactions == "0")
+sum(sizetransactions == "1")
+### P - list of items
+
+#### 10. Split datasets ####
+
+## 10.1 Take out the 0 
+sum(sizetransactions == "0")
+which(sizetransactions == "0")
+ElectronidexTransactions_0 <- ElectronidexTransactions[sizetransactions == 0]
+summary(ElectronidexTransactions_0)
+str(ElectronidexTransactions_0)
+
+ElectronidexTransactions_new <- ElectronidexTransactions[!size(ElectronidexTransactions)== "0"]
+summary(ElectronidexTransactions_new)
+
+sizetransactions_new <- size(ElectronidexTransactions_new)
+hist(sizetransactions_new)
+
+## 10.2 split retail vs wholesale // individuals vs companies
+
+# 10.2.1 - Create wholesale dataset
+sum(sizetransactions_new == "1")
+sum(sizetransactions_new == "2")
+sum(sizetransactions_new == "3")
+sum(sizetransactions_new == "4")
+sum(sizetransactions_new == "5")
+sum(sizetransactions_new == "6")
+
+ElectronidexTransactions_new_1 <- ElectronidexTransactions_new[!size(ElectronidexTransactions_new)== "1"]
+summary(ElectronidexTransactions_new_1)
+ElectronidexTransactions_new_2 <- ElectronidexTransactions_new_1[!size(ElectronidexTransactions_new_1)== "2"]
+summary(ElectronidexTransactions_new_2)
+ElectronidexTransactions_new_3 <- ElectronidexTransactions_new_2[!size(ElectronidexTransactions_new_2)== "3"]
+summary(ElectronidexTransactions_new_3)
+ElectronidexTransactions_new_4 <- ElectronidexTransactions_new_3[!size(ElectronidexTransactions_new_3)== "4"]
+summary(ElectronidexTransactions_new_4)
+ElectronidexTransactions_new_5 <- ElectronidexTransactions_new_4[!size(ElectronidexTransactions_new_4)== "5"]
+summary(ElectronidexTransactions_new_5)
+
+TransactionsWholesale <- ElectronidexTransactions_new_5
+TransactionsCompany <- TransactionsWholesale
+summary(TransactionsCompany)
+ ### P: dataset as a wholesale is named TransactionsWholesale
+
+SizeTransactionsWholesale <- size(TransactionsCompany)
+SizeTransactionsCompany <- SizeTransactionsWholesale
+hist(SizeTransactionsCompany)
+plot(SizeTransactionsCompany)
+
+# 10.2.2 - Create reatail dataset / individual
+
+sum(sizetransactions_new == "1") + sum(sizetransactions_new == "2") + sum(sizetransactions_new == "3") + sum(sizetransactions_new == "4") + sum(sizetransactions_new == "5")
+### C: 6981 transactions made as a retailer, to individuals
+
+
+
