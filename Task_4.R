@@ -1114,6 +1114,36 @@ list(ElectronidexTransactions_company)
 itemFrequencyPlot(ElectronidexTransactions_company, type = "absolute", topN =10)
 #### 11. Apply model // general ####
 
+
+Rules_general <- apriori(ElectronidexTransactions_clean, parameter = list(supp=0.005, conf=0.01, minlen = 2, maxlen = 4))
+inspect(head((sort(Rules_general, by="confidence")), n=10))
+inspect(head((sort(Rules_general, by="lift")), n=10))
+summary(Rules_general)
+plot(sort(Rules_general, by ="confidence")[1:10], method="graph")
+
+
+
+
+## imac
+
+Rules_iMac <- apriori(ElectronidexTransactions_clean, parameter = list(supp=0.005, conf=0.01, minlen = 2),
+                      appearance = list(lhs=c("iMac")))
+inspect(head((sort(Rules_iMac, by="confidence")), n=10))
+inspect(head((sort(Rules_iMac, by="lift")), n=10))
+summary(Rules_iMac)
+plot(sort(Rules_iMac, by ="confidence")[1:10], method="graph")
+
+## hp laptop
+
+Rules_hplaptop <- apriori(ElectronidexTransactions_clean, parameter = list(supp=0.005, conf=0.01, minlen = 2),
+                      appearance = list(lhs=c("HP Laptop")))
+inspect(head((sort(Rules_hplaptop, by="confidence")), n=10))
+inspect(head((sort(Rules_hplaptop, by="lift")), n=10))
+summary(Rules_hplaptop)
+plot(sort(Rules_hplaptop, by ="confidence")[1:10], method="graph")
+
+## desktops, laptops and tablets
+
 TransactionsByType <- aggregate(ElectronidexTransactions_clean ,by = "Product_type")
 
 Rules_type <- apriori(TransactionsByType, parameter = list(supp=0.005, conf=0.01, minlen = 2),
@@ -1122,6 +1152,9 @@ inspect(head((sort(Rules_type, by="confidence")), n=10))
 inspect(head((sort(Rules_type, by="lift")), n=10))
 summary(Rules_type)
 plot(sort(Rules_type, by ="confidence")[1:10], method="graph")
+
+## apple , hp, dell
+
 
 TransactionsByBrand <- aggregate(ElectronidexTransactions_clean ,by = "Product_brand")
 
@@ -1133,6 +1166,32 @@ inspect(head((sort(Rules_brand, by="lift")), n=10))
 summary(Rules_brand)
 
 plot(sort(Rules_brand, by ="confidence")[1:10], method="graph")
+
+
+## 2nd round
+
+Rules_type_2 <- apriori(TransactionsByType, parameter = list(supp=0.005, conf=0.01, minlen = 2),
+                      appearance = list(lhs=c("Desktops")))
+inspect(head((sort(Rules_type_2, by="confidence")), n=10))
+inspect(head((sort(Rules_type_2, by="lift")), n=10))
+summary(Rules_type)
+plot(sort(Rules_type_2, by ="confidence")[1:10], method="graph")
+
+Rules_type_3 <- apriori(TransactionsByType, parameter = list(supp=0.005, conf=0.01, minlen = 2),
+                        appearance = list(lhs=c("Laptops")))
+inspect(head((sort(Rules_type_3, by="confidence")), n=10))
+inspect(head((sort(Rules_type_3, by="lift")), n=10))
+plot(sort(Rules_type_3, by ="confidence")[1:10], method="graph")
+summary(Rules_type_3)
+
+## 3rd round
+
+Rules_ <- apriori(TransactionsByType, parameter = list(supp=0.005, conf=0.01, minlen = 2),
+                        appearance = list(lhs=c("Laptops")))
+inspect(head((sort(Rules_type_3, by="confidence")), n=10))
+inspect(head((sort(Rules_type_3, by="lift")), n=10))
+plot(sort(Rules_type_3, by ="confidence")[1:10], method="graph")
+summary(Rules_type_3)
 
 
 #### 12. Apply model // company ####
@@ -1151,6 +1210,15 @@ summary(Rules_comp_1)
 plot(Rules_comp_1)
 
 plot(sort(Rules_comp_1, by ="confidence")[1:10], method="graph")
+
+
+Rules_comp_iMac <- apriori(ElectronidexTransactions_company, parameter = list(supp=0.005, conf=0.01, minlen = 2),
+                      appearance = list(lhs=c("iMac")))
+inspect(head((sort(Rules_comp_iMac, by="confidence")), n=10))
+inspect(head((sort(Rules_comp_iMac, by="lift")), n=10))
+summary(Rules_comp_iMac)
+plot(sort(Rules_comp_iMac, by ="confidence")[1:10], method="graph")
+
 
 ## 11.2 by product type
 
